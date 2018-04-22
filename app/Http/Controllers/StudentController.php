@@ -56,9 +56,10 @@ class StudentController extends Controller
      * @param  \App\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(student $student)
+    public function edit( $nim)
     {
-        //
+        $students=student::where('nim',$nim)->first();
+        return view ('student.editstudent',compact('students'));
     }
 
     /**
@@ -68,9 +69,17 @@ class StudentController extends Controller
      * @param  \App\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, student $student)
+
+    public function update(Request $request, $nim)
     {
-        //
+        $data=[
+            'nim' => $request->nim,
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone'=> $request->phone
+        ];
+        student::where('nim', $nim)->update($data);
+        return redirect('student');
     }
 
     /**
